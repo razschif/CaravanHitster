@@ -5,307 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>נחש את השנה 🎵</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <script src="songs.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #f0f4fa;
-      --surface:  #ffffff;
-      --groove:   #d0daea;
-      --blue:     #1a6fd4;
-      --blue-dim: #1252a3;
-      --navy:     #0f1f3d;
-      --muted:    #7a90b0;
+      --bg:        #f0f4fa;
+      --surface:   #ffffff;
+      --groove:    #d0daea;
+      --blue:      #1a6fd4;
+      --blue-dim:  #1252a3;
+      --blue-light:#e8f0fb;
+      --navy:      #0f1f3d;
+      --muted:     #7a90b0;
     }
-
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--navy);
-      font-family: 'Heebo', sans-serif;
-    }
-
+    html, body { height: 100%; background: var(--bg); color: var(--navy); font-family: 'Heebo', sans-serif; }
     body::before {
-      content: '';
-      position: fixed; inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: radial-gradient(circle, #c5d5ed 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.45;
-      pointer-events: none; z-index: 0;
+      background-size: 28px 28px; opacity: 0.45; pointer-events: none; z-index: 0;
     }
     body::after {
-      content: '';
-      position: fixed;
-      width: 700px; height: 700px;
+      content: ''; position: fixed; width: 700px; height: 700px;
       background: radial-gradient(circle, rgba(26,111,212,0.10) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none; z-index: 0;
+      top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 0;
     }
 
-    /* ══ WELCOME PAGE ══ */
-    #welcomePage {
-      display: none;
-      position: relative; z-index: 1;
-      min-height: 100vh;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      padding: 40px 24px;
-      text-align: center;
-    }
+    /* ══ WELCOME ══ */
+    #welcomePage { display: none; position: relative; z-index: 1; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; gap: 40px; padding: 40px 24px; text-align: center; }
     #welcomePage.active { display: flex; }
-
-    .logo-wrap img {
-      max-height: 90px;
-      max-width: 280px;
-      object-fit: contain;
-    }
-
-    .welcome-card {
-      background: var(--surface);
-      border-radius: 28px;
-      padding: 48px 40px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 8px 40px rgba(26,111,212,0.10);
-      border: 1px solid #e0e8f4;
-    }
-
+    .logo-wrap img { max-height: 90px; max-width: 280px; object-fit: contain; }
+    .welcome-card { background: var(--surface); border-radius: 28px; padding: 48px 40px; max-width: 420px; width: 100%; box-shadow: 0 8px 40px rgba(26,111,212,0.10); border: 1px solid #e0e8f4; }
     .welcome-icon { font-size: 56px; margin-bottom: 16px; display: block; }
-
-    .welcome-card h1 {
-      font-size: clamp(28px, 6vw, 42px);
-      font-weight: 900;
-      color: var(--navy);
-      line-height: 1.15;
-      margin-bottom: 12px;
-    }
+    .welcome-card h1 { font-size: clamp(28px, 6vw, 42px); font-weight: 900; color: var(--navy); line-height: 1.15; margin-bottom: 12px; }
     .welcome-card h1 span { color: var(--blue); }
-
-    .welcome-card p {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--blue);
-      color: #fff;
-      font-family: 'Heebo', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      padding: 14px 32px;
-      border-radius: 999px;
-      text-decoration: none;
-      box-shadow: 0 4px 20px rgba(26,111,212,0.30);
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-primary:hover {
-      background: var(--blue-dim);
-      box-shadow: 0 6px 28px rgba(26,111,212,0.42);
-      transform: translateY(-1px);
-    }
-
+    .welcome-card p { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--blue); color: #fff; font-family: 'Heebo', sans-serif; font-size: 17px; font-weight: 700; padding: 14px 32px; border-radius: 999px; text-decoration: none; box-shadow: 0 4px 20px rgba(26,111,212,0.30); transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--blue-dim); transform: translateY(-1px); }
     .footer-note { font-size: 12px; color: var(--muted); opacity: 0.7; }
 
-    /* ══ PLAYER PAGE ══ */
-    #playerPage {
-      display: none;
-      position: relative; z-index: 1;
-      height: 100vh;
-      overflow: hidden;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      padding: 24px;
-    }
+    /* ══ PLAYER ══ */
+    #playerPage { display: none; position: relative; z-index: 1; height: 100vh; overflow: hidden; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 24px; }
     #playerPage.active { display: flex; }
+    .player-logo img { max-height: 64px; max-width: 200px; object-fit: contain; }
 
-    .player-logo img {
-      max-height: 64px;
-      max-width: 200px;
-      object-fit: contain;
-    }
-
-    .vinyl-wrap {
-      position: relative;
-      width: clamp(180px, 42vw, 260px);
-      aspect-ratio: 1;
-      flex-shrink: 0;
-    }
+    .vinyl-wrap { position: relative; width: clamp(180px, 42vw, 260px); aspect-ratio: 1; flex-shrink: 0; }
     .vinyl {
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          #0f1f3d 0%, #162a4e 30%, #0f1f3d 31%, #1a3460 40%,
-          #0f1f3d 41%, #162e56 52%, #0f1f3d 53%, #1a3460 62%,
-          #0f1f3d 63%, #162a4e 74%, #0f1f3d 75%, #1a3460 84%,
-          #0f1f3d 85%, #162e56 96%, #0f1f3d 97%);
+      width: 100%; height: 100%; border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%,
+        #0f1f3d 0%, #162a4e 30%, #0f1f3d 31%, #1a3460 40%,
+        #0f1f3d 41%, #162e56 52%, #0f1f3d 53%, #1a3460 62%,
+        #0f1f3d 63%, #162a4e 74%, #0f1f3d 75%, #1a3460 84%,
+        #0f1f3d 85%, #162e56 96%, #0f1f3d 97%);
       box-shadow: 0 0 0 2px #c5d5ed, 0 20px 60px rgba(26,111,212,0.15);
-      animation: spin 4s linear infinite paused;
-      position: relative;
+      animation: spin 4s linear infinite paused; position: relative;
     }
     .vinyl.playing { animation-play-state: running; }
-    .vinyl::after {
-      content: ''; position: absolute; inset: 35%;
-      border-radius: 50%;
-      background: radial-gradient(circle, #4a9eff 0%, #1a6fd4 60%, #1252a3 100%);
-      box-shadow: 0 0 12px rgba(26,111,212,0.5);
-    }
-    .vinyl::before {
-      content: ''; position: absolute; inset: 48.5%;
-      border-radius: 50%;
-      background: var(--bg); z-index: 2;
-    }
-
-    .tonearm {
-      position: absolute;
-      top: -12%; left: -8%;
-      width: 44%; height: 44%;
-      transform-origin: 10% 10%;
-      transition: transform 0.6s cubic-bezier(.4,0,.2,1);
-      transform: rotate(22deg);
-    }
+    .vinyl::after { content: ''; position: absolute; inset: 35%; border-radius: 50%; background: radial-gradient(circle, #4a9eff 0%, #1a6fd4 60%, #1252a3 100%); box-shadow: 0 0 12px rgba(26,111,212,0.5); }
+    .vinyl::before { content: ''; position: absolute; inset: 48.5%; border-radius: 50%; background: var(--bg); z-index: 2; }
+    .tonearm { position: absolute; top: -12%; left: -8%; width: 44%; height: 44%; transform-origin: 10% 10%; transition: transform 0.6s cubic-bezier(.4,0,.2,1); transform: rotate(22deg); }
     .tonearm.playing { transform: rotate(0deg); }
     .tonearm svg { width: 100%; height: 100%; }
-
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .controls {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 18px;
-      width: 100%; max-width: 320px;
-    }
-
-    .play-btn {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      border: 2px solid var(--blue);
-      background: var(--blue);
-      color: #fff; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(26,111,212,0.35);
-      flex-shrink: 0;
-    }
+    .controls { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; max-width: 320px; }
+    .play-btn { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--blue); background: var(--blue); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 20px rgba(26,111,212,0.35); flex-shrink: 0; }
     .play-btn:hover { background: var(--blue-dim); }
     .play-btn:active { transform: scale(0.94); }
     .play-btn svg { width: 28px; height: 28px; }
-
-    .progress-row {
-      width: 100%; display: flex; align-items: center; gap: 10px;
-      direction: ltr;
-    }
+    .progress-row { width: 100%; display: flex; align-items: center; gap: 10px; direction: ltr; }
     .time { font-size: 12px; color: var(--muted); min-width: 34px; text-align: center; }
-
-    .bar-track {
-      flex: 1; height: 4px;
-      background: var(--groove); border-radius: 4px;
-      cursor: pointer; position: relative; overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%; background: var(--blue); border-radius: 4px;
-      width: 0%; transition: width 0.25s linear; pointer-events: none;
-    }
-
-    .volume-row {
-      display: flex; align-items: center; gap: 10px;
-      width: 100%; direction: ltr;
-    }
+    .bar-track { flex: 1; height: 4px; background: var(--groove); border-radius: 4px; cursor: pointer; position: relative; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--blue); border-radius: 4px; width: 0%; transition: width 0.25s linear; pointer-events: none; }
+    .volume-row { display: flex; align-items: center; gap: 10px; width: 100%; direction: ltr; }
     .vol-icon { color: var(--muted); flex-shrink: 0; }
-    input[type=range] {
-      -webkit-appearance: none; flex: 1; height: 4px;
-      background: var(--groove); border-radius: 4px; outline: none; cursor: pointer;
-    }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 14px; height: 14px;
-      border-radius: 50%; background: var(--blue); cursor: pointer;
-    }
-
-    .badge {
-      font-size: 12px; letter-spacing: 0.05em;
-      color: var(--muted); transition: color 0.3s;
-    }
+    input[type=range] { -webkit-appearance: none; flex: 1; height: 4px; background: var(--groove); border-radius: 4px; outline: none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); cursor: pointer; }
+    .badge { font-size: 12px; letter-spacing: 0.05em; color: var(--muted); transition: color 0.3s; }
     .badge.active { color: var(--blue); font-weight: 600; }
 
-    .song-info {
-      text-align: center;
-      max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height 0.5s ease, opacity 0.5s ease;
-    }
+    .song-info { text-align: center; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.5s ease; }
     .song-info.revealed { max-height: 100px; opacity: 1; }
     .song-title { font-size: clamp(20px, 5vw, 28px); font-weight: 900; color: var(--navy); }
-    .song-artist { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .song-year { display: inline-block; margin-top: 8px; background: var(--blue-light); color: var(--blue); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 999px; }
 
-    .reveal-btn {
-      background: transparent;
-      border: 1.5px solid var(--groove);
-      color: var(--muted);
-      font-family: 'Heebo', sans-serif;
-      font-size: 13px; font-weight: 500;
-      padding: 8px 22px; border-radius: 999px; cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .reveal-btn:hover {
-      border-color: var(--blue); color: var(--blue);
-      background: rgba(26,111,212,0.06);
-    }
+    .reveal-btn { background: transparent; border: 1.5px solid var(--groove); color: var(--muted); font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 22px; border-radius: 999px; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    .reveal-btn:hover { border-color: var(--blue); color: var(--blue); background: rgba(26,111,212,0.06); }
 
-    .error-msg {
-      display: none; text-align: center;
-      color: #c0392b; font-size: 14px;
-      max-width: 280px; line-height: 1.6;
-    }
-    .error-msg.show { display: block; }
+    /* ══ ERROR ══ */
+    #errorPage { display: none; position: relative; z-index: 1; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 40px 24px; text-align: center; }
+    #errorPage.active { display: flex; }
+    .error-card { background: var(--surface); border-radius: 28px; padding: 48px 40px; max-width: 400px; width: 100%; box-shadow: 0 8px 40px rgba(26,111,212,0.10); border: 1px solid #fde0e0; }
+    .error-card .err-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+    .error-card h2 { font-size: 22px; font-weight: 900; margin-bottom: 10px; }
+    .error-card p { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .error-card p strong { color: #c0392b; }
   </style>
 </head>
 <body>
 
-<!-- ══ WELCOME PAGE ══ -->
+<!-- ══ WELCOME ══ -->
 <div id="welcomePage">
-  <div class="logo-wrap">
-    <img src="logo.png" alt="לוגו המשלחת" />
-  </div>
+  <div class="logo-wrap"><img src="logo.png" alt="לוגו המשלחת" /></div>
   <div class="welcome-card">
     <span class="welcome-icon">🎵</span>
-    <h1>ברוכים הבאים<br/>ל<span>נחש את השנה</span>!</h1>
-    <p>שחקו את המשחק המוזיקלי של המשלחת — האזינו לשיר ונסו לנחש באיזו שנה הוא יצא.</p>
+    <h1>ברוכים הבאים<br/>ל<span>קרוואן היטסטר</span>!</h1>
+    <p>שחקו, האזינו לשיר ונסו לנחש באיזו שנה הוא יצא.</p>
     <a href="library.html" class="btn-primary">לספריית השירים ←</a>
   </div>
   <p class="footer-note">סרקו QR כדי להפעיל שיר ישירות</p>
 </div>
 
-<!-- ══ PLAYER PAGE ══ -->
+<!-- ══ PLAYER ══ -->
 <div id="playerPage">
-  <div class="player-logo">
-    <img src="logo.png" alt="לוגו המשלחת" />
-  </div>
-
+  <div class="player-logo"><img src="logo.png" alt="לוגו המשלחת" /></div>
   <div class="vinyl-wrap">
     <div class="vinyl" id="vinyl"></div>
     <div class="tonearm" id="tonearm">
-      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 80 80" fill="none">
         <line x1="8" y1="8" x2="52" y2="68" stroke="#7a90b0" stroke-width="2.5" stroke-linecap="round"/>
         <circle cx="8" cy="8" r="5" fill="#c5d5ed" stroke="#7a90b0" stroke-width="1.5"/>
         <circle cx="53" cy="70" r="4" fill="#1a6fd4" opacity="0.9"/>
       </svg>
     </div>
   </div>
-
   <div class="song-info" id="songInfo">
     <div class="song-title" id="songTitle"></div>
-    <div class="song-artist" id="songArtist"></div>
+    <span class="song-year" id="songYear"></span>
   </div>
-
   <div class="controls">
     <p class="badge" id="badge">לחצו להפעלה</p>
     <button class="play-btn" id="playBtn" aria-label="נגן / השהה">
@@ -325,99 +152,76 @@
     </div>
     <button class="reveal-btn" id="revealBtn">👁 גלה את שם השיר</button>
   </div>
+</div>
 
-  <p class="error-msg" id="errorMsg"></p>
+<!-- ══ ERROR ══ -->
+<div id="errorPage">
+  <div class="logo-wrap"><img src="logo.png" alt="לוגו המשלחת" /></div>
+  <div class="error-card">
+    <span class="err-icon">🎵❓</span>
+    <h2>שיר לא נמצא</h2>
+    <p>השיר עם מספר <strong id="errorId"></strong> לא קיים בספרייה.</p>
+    <a href="library.html" class="btn-primary">לספריית השירים ←</a>
+  </div>
 </div>
 
 <audio id="audio" preload="auto"></audio>
-
 <script>
   const $ = id => document.getElementById(id);
-  const fmt = s => {
-    const m = Math.floor(s / 60), sec = Math.floor(s % 60);
-    return `${m}:${sec.toString().padStart(2,'0')}`;
-  };
+  const fmt = s => { const m = Math.floor(s/60), sec = Math.floor(s%60); return `${m}:${sec.toString().padStart(2,'0')}`; };
 
-  const params   = new URLSearchParams(location.search);
-  const songFile = params.get('song');
-  const titleP   = params.get('title');
-  const artistP  = params.get('artist');
+  const songId = new URLSearchParams(location.search).get('song');
 
-  if (!songFile) {
+  if (!songId) {
     $('welcomePage').classList.add('active');
   } else {
-    $('playerPage').classList.add('active');
+    const song = SONGS_BY_ID[Number(songId)];
+    if (!song) {
+      $('errorPage').classList.add('active');
+      $('errorId').textContent = songId;
+    } else {
+      $('playerPage').classList.add('active');
+      const audio = $('audio');
+      audio.src = `songs/${song.file}.mp3`;
+      $('songTitle').textContent = song.title;
+      $('songYear').textContent  = song.year;
 
-    const audio     = $('audio');
-    const vinyl     = $('vinyl');
-    const tonearm   = $('tonearm');
-    const playBtn   = $('playBtn');
-    const iconPlay  = $('iconPlay');
-    const iconPause = $('iconPause');
-    const barFill   = $('barFill');
-    const barTrack  = $('barTrack');
-    const timeCur   = $('timeCur');
-    const timeTot   = $('timeTot');
-    const volSlider = $('volSlider');
-    const badge     = $('badge');
-    const songInfo  = $('songInfo');
-    const songTitle = $('songTitle');
-    const songArtist= $('songArtist');
-    const errorMsg  = $('errorMsg');
-    const revealBtn = $('revealBtn');
+      audio.onerror = () => { $('badge').textContent = 'שגיאה בטעינת השיר'; $('playBtn').disabled = true; };
 
-    audio.src = `songs/${songFile}.mp3`;
-    songTitle.textContent  = titleP  || songFile.replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-    songArtist.textContent = artistP || '';
+      $('revealBtn').addEventListener('click', () => {
+        $('songInfo').classList.add('revealed');
+        $('revealBtn').style.display = 'none';
+      });
 
-    audio.onerror = () => {
-      errorMsg.textContent = `לא ניתן לטעון את "${songFile}.mp3". ודאו שהקובץ קיים בתיקיית songs/.`;
-      errorMsg.classList.add('show');
-      playBtn.disabled = true;
-      badge.textContent = 'שגיאה בטעינת השיר';
-    };
+      let playing = false;
+      const setPlaying = val => {
+        playing = val;
+        $('vinyl').classList.toggle('playing', val);
+        $('tonearm').classList.toggle('playing', val);
+        $('iconPlay').style.display  = val ? 'none' : '';
+        $('iconPause').style.display = val ? '' : 'none';
+        $('badge').textContent = val ? '♪ מנגן — נחשו את השנה!' : 'מושהה';
+        $('badge').classList.toggle('active', val);
+      };
 
-    revealBtn.addEventListener('click', () => {
-      songInfo.classList.add('revealed');
-      revealBtn.style.display = 'none';
-    });
+      $('playBtn').addEventListener('click', () => {
+        if (playing) { audio.pause(); setPlaying(false); }
+        else audio.play().then(() => setPlaying(true)).catch(() => { $('badge').textContent = 'הפעלה נחסמה. לחצו שוב.'; });
+      });
+      audio.addEventListener('ended', () => setPlaying(false));
+      audio.addEventListener('timeupdate', () => {
+        barFill.style.width = (audio.duration ? audio.currentTime/audio.duration*100 : 0) + '%';
+        $('timeCur').textContent = fmt(audio.currentTime);
+      });
+      audio.addEventListener('loadedmetadata', () => { $('timeTot').textContent = fmt(audio.duration); });
+      $('barTrack').addEventListener('click', e => {
+        if (!audio.duration) return;
+        audio.currentTime = (e.clientX - $('barTrack').getBoundingClientRect().left) / $('barTrack').offsetWidth * audio.duration;
+      });
+      $('volSlider').addEventListener('input', e => { audio.volume = e.target.value; });
 
-    let playing = false;
-    function setPlaying(val) {
-      playing = val;
-      vinyl.classList.toggle('playing', val);
-      tonearm.classList.toggle('playing', val);
-      iconPlay.style.display  = val ? 'none' : '';
-      iconPause.style.display = val ? ''     : 'none';
-      badge.textContent = val ? '♪ מנגן — נחשו את השנה!' : 'מושהה';
-      badge.classList.toggle('active', val);
+      const barFill = $('barFill');
     }
-
-    playBtn.addEventListener('click', () => {
-      if (playing) { audio.pause(); setPlaying(false); }
-      else {
-        audio.play().then(() => setPlaying(true)).catch(() => {
-          errorMsg.textContent = 'הפעלה נחסמה. לחצו שוב.';
-          errorMsg.classList.add('show');
-        });
-      }
-    });
-
-    audio.addEventListener('ended', () => setPlaying(false));
-    audio.addEventListener('timeupdate', () => {
-      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-      barFill.style.width = pct + '%';
-      timeCur.textContent = fmt(audio.currentTime);
-    });
-    audio.addEventListener('loadedmetadata', () => {
-      timeTot.textContent = fmt(audio.duration);
-    });
-    barTrack.addEventListener('click', e => {
-      if (!audio.duration) return;
-      const rect = barTrack.getBoundingClientRect();
-      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-    });
-    volSlider.addEventListener('input', () => { audio.volume = volSlider.value; });
   }
 </script>
 </body>

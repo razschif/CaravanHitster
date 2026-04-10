@@ -9,315 +9,115 @@
   <script src="songs.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #f0f4fa;
-      --surface:  #ffffff;
-      --groove:   #d0daea;
-      --blue:     #1a6fd4;
-      --blue-dim: #1252a3;
-      --blue-light: #e8f0fb;
-      --navy:     #0f1f3d;
-      --muted:    #7a90b0;
+      --bg:        #f0f4fa;
+      --surface:   #ffffff;
+      --groove:    #d0daea;
+      --blue:      #1a6fd4;
+      --blue-dim:  #1252a3;
+      --blue-light:#e8f0fb;
+      --navy:      #0f1f3d;
+      --muted:     #7a90b0;
     }
+    html, body { min-height: 100%; background: var(--bg); color: var(--navy); font-family: 'Heebo', sans-serif; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle, #c5d5ed 1px, transparent 1px); background-size: 28px 28px; opacity: 0.4; pointer-events: none; z-index: 0; }
 
-    html, body {
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--navy);
-      font-family: 'Heebo', sans-serif;
-    }
+    .page { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 40px 20px 80px; }
 
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: radial-gradient(circle, #c5d5ed 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.4;
-      pointer-events: none; z-index: 0;
-    }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+    .topbar img { max-height: 52px; max-width: 160px; object-fit: contain; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--groove); transition: color 0.2s, border-color 0.2s, background 0.2s; }
+    .back-link:hover { color: var(--blue); border-color: var(--blue); background: var(--blue-light); }
 
-    /* ── layout ── */
-    .page {
-      position: relative; z-index: 1;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 40px 20px 80px;
-    }
-
-    /* ── top bar ── */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 36px;
-    }
-
-    .topbar img {
-      max-height: 52px;
-      max-width: 160px;
-      object-fit: contain;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1.5px solid var(--groove);
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-    }
-    .back-link:hover {
-      color: var(--blue);
-      border-color: var(--blue);
-      background: var(--blue-light);
-    }
-
-    /* ── page title ── */
-    .page-title {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .page-title h1 {
-      font-size: clamp(26px, 6vw, 38px);
-      font-weight: 900;
-      color: var(--navy);
-      line-height: 1.1;
-    }
+    .page-title { text-align: center; margin-bottom: 40px; }
+    .page-title h1 { font-size: clamp(26px, 6vw, 38px); font-weight: 900; color: var(--navy); line-height: 1.1; }
     .page-title h1 span { color: var(--blue); }
-    .page-title p {
-      margin-top: 8px;
-      font-size: 15px;
-      color: var(--muted);
-    }
+    .page-title p { margin-top: 8px; font-size: 15px; color: var(--muted); }
 
-    /* ── search ── */
-    .search-wrap {
-      position: relative;
-      margin-bottom: 36px;
-    }
-    .search-icon {
-      position: absolute;
-      top: 50%; right: 16px;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-    }
-    .search-input {
-      width: 100%;
-      padding: 13px 44px 13px 16px;
-      border-radius: 999px;
-      border: 1.5px solid var(--groove);
-      background: var(--surface);
-      font-family: 'Heebo', sans-serif;
-      font-size: 15px;
-      color: var(--navy);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      direction: rtl;
-    }
-    .search-input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(26,111,212,0.12);
-    }
+    .search-wrap { position: relative; margin-bottom: 36px; }
+    .search-icon { position: absolute; top: 50%; right: 16px; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .search-input { width: 100%; padding: 13px 44px 13px 16px; border-radius: 999px; border: 1.5px solid var(--groove); background: var(--surface); font-family: 'Heebo', sans-serif; font-size: 15px; color: var(--navy); outline: none; transition: border-color 0.2s, box-shadow 0.2s; direction: rtl; }
+    .search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,111,212,0.12); }
     .search-input::placeholder { color: var(--muted); }
 
-    /* ── year section ── */
-    .year-section {
-      margin-bottom: 32px;
-    }
+    .year-section { margin-bottom: 32px; }
     .year-section.hidden { display: none; }
+    .year-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .year-label { font-size: 22px; font-weight: 900; color: var(--blue); letter-spacing: -0.02em; white-space: nowrap; }
+    .year-line { flex: 1; height: 1.5px; background: var(--groove); border-radius: 2px; }
 
-    .year-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 12px;
-    }
-    .year-label {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--blue);
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    }
-    .year-line {
-      flex: 1;
-      height: 1.5px;
-      background: var(--groove);
-      border-radius: 2px;
-    }
-
-    /* ── song button ── */
-    .songs-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .song-btn {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      background: var(--surface);
-      border: 1.5px solid var(--groove);
-      border-radius: 16px;
-      padding: 14px 18px;
-      text-decoration: none;
-      color: var(--navy);
-      cursor: pointer;
-      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, transform 0.15s;
-      text-align: right;
-    }
-    .song-btn:hover {
-      border-color: var(--blue);
-      background: var(--blue-light);
-      box-shadow: 0 4px 16px rgba(26,111,212,0.12);
-      transform: translateY(-1px);
-    }
+    .songs-list { display: flex; flex-direction: column; gap: 10px; }
+    .song-btn { display: flex; align-items: center; gap: 14px; width: 100%; background: var(--surface); border: 1.5px solid var(--groove); border-radius: 16px; padding: 14px 18px; text-decoration: none; color: var(--navy); cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, transform 0.15s; text-align: right; }
+    .song-btn:hover { border-color: var(--blue); background: var(--blue-light); box-shadow: 0 4px 16px rgba(26,111,212,0.12); transform: translateY(-1px); }
     .song-btn:active { transform: scale(0.98); }
 
-    .song-btn-icon {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--blue-light);
-      color: var(--blue);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-size: 18px;
-      transition: background 0.2s;
-    }
-    .song-btn:hover .song-btn-icon {
-      background: var(--blue);
-      color: #fff;
-    }
+    .song-id-badge { width: 36px; height: 36px; border-radius: 10px; background: var(--blue-light); color: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; font-weight: 700; transition: background 0.2s, color 0.2s; }
+    .song-btn:hover .song-id-badge { background: var(--blue); color: #fff; }
 
-    .song-btn-text { flex: 1; }
-    .song-btn-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.2;
-    }
-    .song-btn-artist {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .song-btn-title { font-size: 16px; font-weight: 700; color: var(--navy); line-height: 1.2; flex: 1; }
 
-    .song-btn-arrow {
-      color: var(--groove);
-      font-size: 18px;
-      transition: color 0.2s, transform 0.2s;
-      flex-shrink: 0;
-    }
-    .song-btn:hover .song-btn-arrow {
-      color: var(--blue);
-      transform: translateX(-4px);
-    }
+    .song-btn-arrow { color: var(--groove); font-size: 18px; transition: color 0.2s, transform 0.2s; flex-shrink: 0; }
+    .song-btn:hover .song-btn-arrow { color: var(--blue); transform: translateX(-4px); }
 
-    /* ── empty state ── */
-    .empty-state {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
+    .empty-state { display: none; text-align: center; padding: 60px 20px; color: var(--muted); }
     .empty-state.show { display: block; }
     .empty-state .emoji { font-size: 40px; margin-bottom: 12px; }
-    .empty-state p { font-size: 16px; }
 
-    /* ── total count ── */
-    .total-count {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 28px;
-    }
+    .total-count { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 28px; }
     .total-count strong { color: var(--blue); }
   </style>
 </head>
 <body>
 <div class="page">
-
   <div class="topbar">
     <img src="logo.png" alt="לוגו המשלחת" />
     <a href="index.html" class="back-link">→ חזרה לדף הבית</a>
   </div>
-
   <div class="page-title">
     <h1>ספריית <span>השירים</span></h1>
     <p>בחרו שיר כדי להפעיל אותו ולנחש את השנה</p>
   </div>
-
   <div class="search-wrap">
     <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
       <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
     </svg>
-    <input
-      type="search"
-      id="searchInput"
-      class="search-input"
-      placeholder="חפשו שיר או אמן..."
-    />
+    <input type="search" id="searchInput" class="search-input" placeholder="חפשו שיר..." />
   </div>
-
   <p class="total-count" id="totalCount"></p>
-
   <div id="songsList"></div>
   <div class="empty-state" id="emptyState">
     <div class="emoji">🔍</div>
     <p>לא נמצאו שירים תואמים לחיפוש</p>
   </div>
-
 </div>
-
 <script>
-  // Build the library from songs.js data
   const container   = document.getElementById('songsList');
   const searchInput = document.getElementById('searchInput');
   const emptyState  = document.getElementById('emptyState');
   const totalCount  = document.getElementById('totalCount');
-
   let totalSongs = 0;
 
-  // Render all year sections
   SONGS_BY_YEAR.forEach(group => {
     const section = document.createElement('div');
     section.className = 'year-section';
-    section.dataset.year = group.year;
-
-    // Year header
     section.innerHTML = `
       <div class="year-header">
         <span class="year-label">${group.year}</span>
         <div class="year-line"></div>
       </div>
-      <div class="songs-list" id="list-${group.year}"></div>
+      <div class="songs-list"></div>
     `;
     container.appendChild(section);
-
     const list = section.querySelector('.songs-list');
-
     group.songs.forEach(song => {
       totalSongs++;
       const a = document.createElement('a');
       a.className = 'song-btn';
-      a.href = `index.html?song=${encodeURIComponent(song.file)}&title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`;
-      a.dataset.title  = song.title.toLowerCase();
-      a.dataset.artist = song.artist.toLowerCase();
+      a.href = `index.html?song=${song.id}`;
+      a.dataset.title = song.title.toLowerCase();
       a.innerHTML = `
-        <div class="song-btn-icon">▶</div>
-        <div class="song-btn-text">
-          <div class="song-btn-title">${song.title}</div>
-          <div class="song-btn-artist">${song.artist}</div>
-        </div>
+        <div class="song-id-badge">#${song.id}</div>
+        <div class="song-btn-title">${song.title}</div>
         <span class="song-btn-arrow">←</span>
       `;
       list.appendChild(a);
@@ -326,24 +126,18 @@
 
   totalCount.innerHTML = `<strong>${totalSongs}</strong> שירים בספרייה`;
 
-  // Search / filter
   searchInput.addEventListener('input', () => {
     const q = searchInput.value.trim().toLowerCase();
     let anyVisible = false;
-
     document.querySelectorAll('.year-section').forEach(section => {
-      const buttons = section.querySelectorAll('.song-btn');
       let sectionVisible = false;
-
-      buttons.forEach(btn => {
-        const match = !q || btn.dataset.title.includes(q) || btn.dataset.artist.includes(q);
+      section.querySelectorAll('.song-btn').forEach(btn => {
+        const match = !q || btn.dataset.title.includes(q);
         btn.style.display = match ? '' : 'none';
         if (match) { sectionVisible = true; anyVisible = true; }
       });
-
       section.classList.toggle('hidden', !sectionVisible);
     });
-
     emptyState.classList.toggle('show', !anyVisible);
     totalCount.style.display = anyVisible ? '' : 'none';
   });
